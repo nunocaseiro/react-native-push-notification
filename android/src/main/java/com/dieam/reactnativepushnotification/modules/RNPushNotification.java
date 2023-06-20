@@ -1,10 +1,12 @@
 package com.dieam.reactnativepushnotification.modules;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -147,7 +149,17 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
                           Log.e(LOG_TAG, "Exception: " + errorMessage);
 
                           // Show toast with the failure message
-                          Toast.makeText(getReactApplicationContext(), " " + errorMessage, Toast.LENGTH_LONG).show();
+                             // Show toast with the failure message
+                         AlertDialog.Builder builder = new AlertDialog.Builder(getCurrentActivity());
+                        builder.setTitle("Error")
+                            .setMessage(" " + errorMessage)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                            })
+                        .show();
                           return;
                       }
 
