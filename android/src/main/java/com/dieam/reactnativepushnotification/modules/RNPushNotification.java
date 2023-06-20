@@ -31,6 +31,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import android.widget.Toast;
 
 import android.util.Log;
 
@@ -142,7 +143,11 @@ public class RNPushNotification extends ReactContextBaseJavaModule implements Ac
                   @Override
                   public void onComplete(@NonNull Task<String> task) {
                       if (!task.isSuccessful()) {
-                          Log.e(LOG_TAG, "exception", task.getException());
+                          String errorMessage = task.getException() != null ? task.getException().getMessage() : "Unknown error";
+                          Log.e(LOG_TAG, "Exception: " + errorMessage);
+
+                          // Show toast with the failure message
+                          Toast.makeText(getReactApplicationContext(), " " + errorMessage, Toast.LENGTH_LONG).show();
                           return;
                       }
 
